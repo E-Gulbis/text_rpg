@@ -2,6 +2,9 @@
 
 Can't even call the current state "pre-alpha".
 
-Coding status: suffering with memory management
+Coding status: First steps, far from a usable state.
 
-Please do not try submitting any requests or reporting any bugs. I have only spent a week on this.
+The base is somewhat ready. Now I will have to continue slowly coding in a story. Currently, the only working difficulties are "Medium" and "Debug" and are just being tested for combat.
+Next step will be creating navigation.
+
+If You submit any issues and pull requests, don't expect a fast response, if any. This is far too incomplete to worry about this.
