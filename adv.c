@@ -1,14 +1,17 @@
 //Yes, these are ~450 lines of code. This has a lot of memory management issues.
-
+//TODO: Define all variables to top || at least allocate memory for them.
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 #include <time.h>
 #include <math.h>
+// Variables here to fight dynamic allocation BS.
+
+char input[12] = "verb";
+int diff = 5;
 
 //Start of base structs.
-int diff = 5;//If this does not work... I will perform violent acts upon my desk, computer and monitor.
 typedef struct{
     //Base stats. 0STR, 1AGI, 2DEX, 3CON, 4PER. Might be extended.
     int str; //Physical strength.
@@ -140,6 +143,7 @@ void setupPlayer(){ // TODO - Add character customization.
     player.dex = 5;
     player.con = 5;
     player.per = 5;
+    player.max_health = player.con * 10; //50
     for(int i = 0; i < 5; i++){
         /*player.effects[i][0] = 'N';
         player.effects[i][1] = 'o';
@@ -246,7 +250,6 @@ void enterCombat(npc enemy){
             if(player.effects[i] == 1){
             }
         }
-        char input[12] = "verb";
         printf("%s", message);
         scanf("%s", input);
         char fix = input[0]; //For some reason the first letter of input keeps getting overwritten as [NULL]
@@ -356,7 +359,6 @@ void enterCombat(npc enemy){
                 case 4: //Ignite
                 printf("The dummy casts [Ignite]!\n");
                 printf("It appears that you are now on fire.\n");
-                //TODO - GET BACK HERE MONKEY
                 addEffect(1, 3, 3, "player");
             }
         }
@@ -445,7 +447,6 @@ void intro(int diff){
         printf("You fall in a small clearing. After rethinking about what\'s happened, you feel like you might not wish to go back.\n");
         printf("You notice a small beast get close to you. That's no beast. That's just a big rat.\n");
         //setupPlayer();
-        player.max_health = player.con * 10; //50
         player.health = player.max_health;
         enterCombat(rat);
         break;
@@ -474,11 +475,9 @@ int main(int argc, char *argv[]){
     setupBeasts();
     setupPlayer();
     printf("Input your desired difficulty level - [Easy], [Medium], [Hard], [Insane]\n");
-    char input[12];
     strcpy(input, "error");
     scanf("%s", input);
-    diff = 6;
-    const int fixer = diff; //FFS.
+    //DONE: diff moved to top.
     diff = chooseDifficulty(input);
     char why[23] = "why"; //My actual reaction.
     printf("%s\n%d\n", why, diff); //TODO - Delete this.
@@ -491,3 +490,4 @@ int main(int argc, char *argv[]){
     note("End of script reached!");
     return 0;
 }
+//C:\Users\SKOLENS\Documents\Programmesana\Ernests_Gulbis_10i\git_adv\text_rpg\adv.c

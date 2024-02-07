@@ -1,0 +1,23 @@
+Wed Feb  7 09:30:35 2024 Log file has been opened!
+Wed Feb  7 09:30:35 2024 Beasts have been set up!
+Wed Feb  7 09:30:35 2024 Player has been set up!
+Wed Feb  7 09:30:41 2024 Difficulty chosen - 5
+
+Wed Feb  7 09:30:41 2024 Entered combat versus Dummy
+Wed Feb  7 09:31:55 2024 Log file has been opened!
+Wed Feb  7 09:31:55 2024 Beasts have been set up!
+Wed Feb  7 09:31:55 2024 Player has been set up!
+Wed Feb  7 09:32:11 2024 Difficulty chosen - 2
+
+Wed Feb  7 09:32:11 2024 Entered combat versus Rat
+Wed Feb  7 09:32:21 2024 5.000000 damage.
+Wed Feb  7 09:32:27 2024 Player entered defensive stance.
+Wed Feb  7 09:32:33 2024 Player does nothing.
+Wed Feb  7 09:32:40 2024 Player attempts to aeaeae
+Wed Feb  7 09:32:51 2024 5.000000 damage.
+Wed Feb  7 09:32:51 2024 End of script reached!
+Wed Feb  7 09:33:02 2024 Log file has been opened!
+Wed Feb  7 09:33:02 2024 Beasts have been set up!
+Wed Feb  7 09:33:02 2024 Player has been set up!
+Wed Feb  7 09:33:18 2024 Wed Feb  7 09:33:18 2024
+Wed Feb  7 09:33:18 2024 Entered combat versus Dummy
