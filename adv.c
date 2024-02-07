@@ -6,7 +6,7 @@
 #include <string.h>
 #include <time.h>
 #include <math.h>
-// Variables here to fight dynamic allocation BS.
+// Variables here to fight memory allocation BS. For more info, check comments marked with "MMWTF"
 
 char input[12] = "verb";
 int diff = 5;
@@ -480,11 +480,11 @@ int main(int argc, char *argv[]){
     //DONE: diff moved to top.
     diff = chooseDifficulty(input);
     char why[23] = "why";
-    sprintf(why, "Difficulty chosen - %d\n", diff); //diff becomes 0?????
+    sprintf(why, "Difficulty chosen - %d\n", diff); //MMWTF: diff becomes 0?????
     if (diff == 6){
         return 1;
     }
-    intro(diff); //And now diff is 327**. what the actual f***.
+    intro(diff); //MMWTF: And now diff is 327**. what the actual f***.
     note("End of script reached!");
     return 0;
 }
