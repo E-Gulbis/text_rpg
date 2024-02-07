@@ -479,14 +479,12 @@ int main(int argc, char *argv[]){
     scanf("%s", input);
     //DONE: diff moved to top.
     diff = chooseDifficulty(input);
-    char why[23] = "why"; //My actual reaction.
-    printf("%s\n%d\n", why, diff); //TODO - Delete this.
+    char why[23] = "why";
     sprintf(why, "Difficulty chosen - %d\n", diff); //diff becomes 0?????
-    note(why);
     if (diff == 6){
         return 1;
     }
-    intro(diff); //And now diff is 327**. what the actual fuck.
+    intro(diff); //And now diff is 327**. what the actual f***.
     note("End of script reached!");
     return 0;
 }
