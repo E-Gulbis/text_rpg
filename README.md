@@ -2,9 +2,9 @@
 
 Can't even call the current state "pre-alpha".
 
-Coding status: First steps, far from a usable state.
+Coding status: Navigation insanity - untested version.
 
-The base is somewhat ready. Now I will have to continue slowly coding in a story. Currently, the only working difficulties are "Medium" and "Debug" and are just being tested for combat.
-Next step will be creating navigation.
+The navigation feature is far too complex to finish in one go.
+It's Coming Soon™.
 
 If You submit any issues and pull requests, don't expect a fast response, if any. This is far too incomplete to worry about this.

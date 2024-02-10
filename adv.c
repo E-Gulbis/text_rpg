@@ -1,5 +1,7 @@
 //Yes, these are ~450 lines of code. This has a lot of memory management issues.
-//TODO: Define all variables to top || at least allocate memory for them.
+//TODO: Make every difficulty the same. Sucks, but will be faster and easier.
+//TODO: Add incentives to pick higher difficulties.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -8,10 +10,30 @@
 #include <math.h>
 // Variables here to fight memory allocation BS. For more info, check comments marked with "MMWTF"
 
-char input[12] = "verb";
+char input[50] = "verb";
 int diff = 5;
 
 //Start of base structs.
+typedef struct{
+    char interactions[5][20];
+    int interact_diff[20]; //Difficulty required to trigger interactions.
+    char terrain[20]; //Terrain type. MUST STANDARDIZE!!!
+    int event; //Special event on a tile. Add an event function with an integer argument.
+    int event_type; //Special event type.
+    bool move_options[3]; //Ordered as N-E-S-W
+} tile;
+typedef struct{
+    tile tiles[9][9];
+    char name[20];
+} level;
+typedef struct{
+    int x;
+    int y;
+} coords;
+
+coords player_coords;
+level current;
+
 typedef struct{
     //Base stats. 0STR, 1AGI, 2DEX, 3CON, 4PER. Might be extended.
     int str; //Physical strength.
@@ -26,6 +48,7 @@ typedef struct{
     int effects[5];
     int effect_durations[5]; //Measured in turns.
     int effect_stacks[5];
+    coords position;
     //TODO - There's bound to be more to this.
 } character; //TODO - Add more stats.
 typedef struct{   // Unintentional yet beautiful comments.
@@ -428,6 +451,163 @@ int chooseDifficulty(char *arg){
         printf("This is not a valid difficulty setting.\n");
         note(strcat("User tried to use difficulty setting ", arg));
         return 6;
+    }
+}
+void loadlevel(int index){
+    //Setup base.
+    for(int x = 0; x < 9; x++){
+        for(int y = 0; y < 9; y++){
+            //current.tiles[x][y].terrain = "Blocked";
+            strcpy(current.tiles[x][y].terrain, "Blocked"); //No moving here.
+            for (int i = 0; i < 3; i++){
+                current.tiles[x][y].move_options[i] = false;
+            }
+            current.tiles[x][y].event = 0;
+            current.tiles[x][y].event_type = 0;
+        }
+    }
+    switch(index){
+        case 0: //Demo level
+            for (int x = 0; x < 3; x++){
+                for (int y = 0; y < 3; y++){
+                    strcpy(current.tiles[x][y].terrain, "Flat"); //No special properties.
+                    for (int i = 0; i < 3; i++){
+                        current.tiles[x][y].move_options[i] = true;
+                    }
+                }
+            }
+            for (int x = 3; x < 7; x++){
+                strcpy(current.tiles[x][0].terrain, "Flat");
+            }
+            //Set up walls
+            for (int x = 0; x < 7; x++){
+                current.tiles[x][0].move_options[3] = false;
+            }
+            for (int y = 0; y < 3; y++){
+                current.tiles[0][y].move_options[1] = false;
+            }
+            current.tiles[0][0].move_options[1] = false;
+
+            current.tiles[1][0].move_options[2] = false;
+
+            current.tiles[2][0].move_options[0] = false;
+
+            current.tiles[3][0].move_options[1] = false;
+            current.tiles[3][0].move_options[3] = false;
+
+            current.tiles[4][0].move_options[1] = false;
+            current.tiles[4][0].move_options[3] = false;
+
+            current.tiles[5][0].move_options[1] = false;
+            current.tiles[5][0].move_options[3] = false;
+
+            current.tiles[6][0].move_options[1] = false;
+            current.tiles[6][0].move_options[3] = false;
+            current.tiles[7][0].move_options[2] = false;
+
+            current.tiles[0][1].move_options[3] = false;
+
+            current.tiles[1][1].move_options[1] = false;
+            current.tiles[1][1].move_options[2] = false;
+
+            current.tiles[2][1].move_options[1] = false;
+            current.tiles[2][1].move_options[3] = false;
+
+            current.tiles[0][2].move_options[1] = false;
+
+            current.tiles[1][2].move_options[1] = false;
+            current.tiles[1][2].move_options[3] = false;
+
+            current.tiles[2][2].move_options[1] = false;
+            current.tiles[2][2].move_options[2] = false;
+            //Set up events
+            current.tiles[3][0].event = 1;
+            current.tiles[3][0].event_type = 0;
+
+            current.tiles[6][0].event = 2;
+            current.tiles[6][0].event_type = 0;
+            //Add starting coordinates.
+
+
+    }
+}
+void event(int event, int event_type){
+    switch(event){
+        case 1: //Enter combat
+            switch(event_type){
+                case 0:
+                    enterCombat(rat);
+            }
+            break;
+        case 2: //Loot
+            switch(event_type){
+                case 0: //Diamond of incompleteness
+                    printf("You have found the diamond of incompleteness!\n");
+                    printf("Thank you for playing the demo!\n");
+            }
+    }
+}
+char* decapitalise(char* string){
+    char* new_string = malloc(sizeof(char) * strlen(string));
+    new_string[0] = tolower(string[0]);
+    return new_string;
+}
+void navigate(int diff, int index){
+    //Oh boy.
+    loadlevel(index);
+    /* Planned:
+        Square grid world.
+        Demo is going to be just a serpentine pattern in the eastern direction, ending with 2N, 1W.
+        Demo objective - diamond of incompleteness.
+    */
+    //Base navigation - Movement, sight.
+
+    while(true){
+            printf("You are standing on a %s tile, Will you [Look] or [Move]?\n", decapitalise(current.tiles[player.position.x][player.position.y].terrain));
+    scanf("%s", input);
+    if (strcmp(input, "Look") == 0){
+        printf("You look around. Nothing stands out."); //Placeholder.
+    } else if (strcmp(input, "Move") == 0) {
+        while(true) {
+            //TODO: Remember to add slowness to terrain when you finally implement it!
+            printf("Where will you move - [North], [East], [South], or [West]?\n");
+            scanf("%s", input);
+            if (strcmp(input, "North") == 0) {
+                if(current.tiles[player.position.x][player.position.y].move_options[0]){
+                    player.position.x--;
+                    break;
+                } else {
+                    printf("You can't go there.\n");
+                }
+            } else if (strcmp(input, "East") == 0){
+                if(current.tiles[player.position.x][player.position.y].move_options[1]){
+                    player.position.y++;
+                    break;
+                } else {
+                    printf("You can't go there.\n");
+                }
+            } else if (strcmp(input, "South") == 0){
+                if(current.tiles[player.position.x][player.position.y].move_options[2]){
+                    player.position.x++;
+                    break;
+                } else {
+                    printf("You can't go there.\n");
+                }
+            } else if (strcmp(input, "West") == 0){
+                if(current.tiles[player.position.x][player.position.y].move_options[3]){
+                    player.position.y--;
+                    break;
+                } else {
+                    printf("You can't go there.\n");
+                }
+            } else if(strcmp(input, "Cancel") == 0 || strcmp(input, "Exit") == 0) {
+                printf("Cancelling movement.");
+                break;
+            }
+        }
+    } else {
+        printf("This is not an option.\n");
+    }
     }
 }
 void intro(int diff){
