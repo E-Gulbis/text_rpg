@@ -1,4 +1,3 @@
-//Yes, these are ~450 lines of code. This has a lot of memory management issues.
 //TODO: Make every difficulty the same. Sucks, but will be faster and easier.
 //TODO: Add incentives to pick higher difficulties.
 
@@ -8,7 +7,7 @@
 #include <string.h>
 #include <time.h>
 #include <math.h>
-// Variables here to fight memory allocation BS. For more info, check comments marked with "MMWTF"
+// Variables here to fight memory allocation issues. For more info, check comments marked with "MMWTF"
 
 char input[50] = "verb";
 int diff = 5;
