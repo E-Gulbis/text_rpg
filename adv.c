@@ -31,7 +31,6 @@ typedef struct{
     int y;
 } coords;
 
-coords player_coords;
 level current;
 
 typedef struct{
@@ -166,7 +165,6 @@ void setupPlayer(){ // TODO - Add character customization.
     player.dex = 5;
     player.con = 5;
     player.per = 5;
-    player.max_health = player.con * 10; //50
     for(int i = 0; i < 5; i++){
         /*player.effects[i][0] = 'N';
         player.effects[i][1] = 'o';
@@ -484,7 +482,7 @@ void loadlevel(int index){
                 current.tiles[x][0].move_options[3] = false;
             }
             for (int y = 0; y < 3; y++){
-                current.tiles[0][y].move_options[1] = false;
+                current.tiles[0][y].move_options[0] = false;
             }
             current.tiles[0][0].move_options[1] = false;
 
@@ -506,6 +504,7 @@ void loadlevel(int index){
             current.tiles[7][0].move_options[2] = false;
 
             current.tiles[0][1].move_options[3] = false;
+            current.tiles[0][1].move_options[1] = true;
 
             current.tiles[1][1].move_options[1] = false;
             current.tiles[1][1].move_options[2] = false;
@@ -547,10 +546,13 @@ void event(int event, int event_type){
             }
     }
 }
-char* decapitalise(char* string){
-    char* new_string = malloc(sizeof(char) * strlen(string));
-    new_string[0] = tolower(string[0]);
-    return new_string;
+char* decapitalise(char* string) {
+    char firstLetter = string[0];
+    if ((int)firstLetter >= (int)'A' && (int)firstLetter <= (int)'Z') {
+        (int)firstLetter += 32;
+    }
+    string[0] = firstLetter;
+    return string;
 }
 void navigate(int diff, int index){
     //Oh boy.
@@ -561,18 +563,16 @@ void navigate(int diff, int index){
         Demo objective - diamond of incompleteness.
     */
     //Base navigation - Movement, sight.
-
+    note("Player has entered navigation.\n");
     while(true){
-            printf("You are standing on a %s tile, Will you [Look] or [Move]?\n", decapitalise(current.tiles[player.position.x][player.position.y].terrain));
-    scanf("%s", input);
-    if (strcmp(input, "Look") == 0){
-        printf("You look around. Nothing stands out."); //Placeholder.
-    } else if (strcmp(input, "Move") == 0) {
+        printf("You are standing on a %s tile, Will you [Look] or move [North], [East], [South], or [West]?\n", decapitalise(current.tiles[player.position.x][player.position.y].terrain));
+        scanf("%s", input);
+
         while(true) {
             //TODO: Remember to add slowness to terrain when you finally implement it!
-            printf("Where will you move - [North], [East], [South], or [West]?\n");
-            scanf("%s", input);
-            if (strcmp(input, "North") == 0) {
+            if (strcmp(input, "Look") == 0){
+                printf("You look around. Nothing stands out."); //Placeholder.
+            } else if (strcmp(input, "North") == 0) {
                 if(current.tiles[player.position.x][player.position.y].move_options[0]){
                     player.position.x--;
                     break;
@@ -581,7 +581,7 @@ void navigate(int diff, int index){
                 }
             } else if (strcmp(input, "East") == 0){
                 if(current.tiles[player.position.x][player.position.y].move_options[1]){
-                    player.position.y++;
+                   player.position.y++;
                     break;
                 } else {
                     printf("You can't go there.\n");
@@ -598,16 +598,12 @@ void navigate(int diff, int index){
                     player.position.y--;
                     break;
                 } else {
-                    printf("You can't go there.\n");
+                   printf("You can't go there.\n");
                 }
-            } else if(strcmp(input, "Cancel") == 0 || strcmp(input, "Exit") == 0) {
-                printf("Cancelling movement.");
-                break;
+            } else {
+                printf("That's not an option.\n");
             }
         }
-    } else {
-        printf("This is not an option.\n");
-    }
     }
 }
 void intro(int diff){
@@ -640,13 +636,16 @@ void intro(int diff){
         printf("You, an ostracised cultist of Melissa, the goddess of mad rage, hit the ground hard. Malnourished and weak, you must press onward. Beat his stupid game.");
         printf("A rat pounces you. Will you [catch] or [dodge] it?");
         scanf("%s", input);
+        break;
         //TODO - Add DEX check & Disadvantage rolls. (For catching, success damages the rat with a throw.)
         // + Also the rat will be caught and ripped apart by a wolf.
         case 5:
-        printf("Hello. Starting combat debug.\n");
-        enterCombat(dummy);
+        printf("Opening demo level.\n");
+        navigate(diff, 0);
+        break;
         default:
         printf("Something went terribly wrong.\n");
+        break;
     }
 }
 int main(int argc, char *argv[]){
@@ -654,6 +653,7 @@ int main(int argc, char *argv[]){
     note("Log file has been opened!");
     setupBeasts();
     setupPlayer();
+    player.max_health = player.con * 10; //50
     printf("Input your desired difficulty level - [Easy], [Medium], [Hard], [Insane]\n");
     strcpy(input, "error");
     scanf("%s", input);
