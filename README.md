@@ -1,10 +1,13 @@
 # This is supposed to be some kind of text RPG.
 
-Can't even call the current state "pre-alpha".
+Demo phase. There is a long way to go.
 
-Coding status: Navigation insanity - untested version.
+Coding status: Demo has been created, but still needs polishing.
 
-The navigation feature is far too complex to finish in one go.
-It's Coming Soon™.
+Yes, I have created the demo level, navigation, combat, and events.
 
-If You submit any issues and pull requests, don't expect a fast response, if any. This is far too incomplete to worry about this.
+To try it, you will have to run `adv.exe` in the command prompt and use difficulty setting "Debug". Then type "pass123" - This part does not have its own message.
+Next step - Tons of upgrading and polishing. There is now a long list of goals - `todo.txt`.
+
+I am ready for feedback - Issues and suggestions can be made in the "Issues" section.
+Again, I will seldom look there and act on them.

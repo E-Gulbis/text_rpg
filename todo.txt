@@ -1,0 +1,10 @@
+> Finish polishing:
+    -> Improve navigation
+    -> Check if combat has issues.
+        [I have suspicions.]
+> Improve events:
+    -> Add difficulty requirements for triggering.
+        [To add incentives to playing at higher difficulties]
+    -> Add automatic/interaction event types
+
+- This is as far as I have planned. This is where I will be adding goals I cannot reach at that moment.
