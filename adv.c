@@ -690,4 +690,3 @@ int main(int argc, char *argv[]){
     note("End of script reached!");
     return 0;
 }
-//C:\Users\SKOLENS\Documents\Programmesana\Ernests_Gulbis_10i\git_adv\text_rpg\adv.c
